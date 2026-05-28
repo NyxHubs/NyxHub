@@ -1,23 +1,34 @@
-# NyxHub v6.25 Launcher + Dashboard
+# NyxHub v6.27 Albion API
 
-## Alterações
-- Instalador customizado removido para voltar ao NSIS estável.
-- Logo do launcher maior e centralizada.
-- Launcher inspirado no mockup aprovado.
-- Botão INICIAR redesenhado.
-- Adicionados atalhos no launcher:
-  - Radar de Mercado
-  - Refino
-  - Crafting
-  - Rotas
-  - Painel Dev
-- Dashboard funcional com módulos.
-- Painel Desenvolvedor com:
-  - Gerenciador de notícias do launcher
-  - Logs
-  - Alternância de modo produção/manutenção
-  - Status API
-  - Limpeza, backup, diagnóstico e salvar config
+## Corrigido
+- Arquivo atualizado de verdade a partir da base anterior.
+- Launcher no visual aprovado, sem atalhos/painel dev fora do login.
+- Dashboard AAA aplicado.
+
+## APIs reais do Albion
+Integração com Albion Online Data Project:
+- West/Americas
+- East/Asia
+- Europe
+- Endpoint de preços atuais
+- Comparação entre cidades
+- Melhor rota de compra/venda
+- Radar de Mercado real
+- Refino com preços reais
+- Crafting com preços reais
+- Rotas com lucro bruto estimado
+
+## Módulos
+- Dashboard
+- Radar de Mercado
+- Refino
+- Crafting
+- Rotas
+- Usuários
+- Banco de Dados
+- Logs
+- Configurações
+- Painel Desenvolvedor
 
 ## Login
 Usuário: NyxLuisFelipe
