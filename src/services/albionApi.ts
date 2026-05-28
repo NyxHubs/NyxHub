@@ -1,4 +1,5 @@
 export type AlbionServer = 'west' | 'east' | 'europe'
+
 export type City =
   | 'Bridgewatch'
   | 'Caerleon'
@@ -8,9 +9,9 @@ export type City =
   | 'Thetford'
   | 'Brecilien'
   | 'Black Market'
-  | 'Arthur\\'s Rest'
-  | 'Merlyn\\'s Rest'
-  | 'Morgana\\'s Rest'
+  | "Arthur's Rest"
+  | "Merlyn's Rest"
+  | "Morgana's Rest"
 
 export type PriceRow = {
   item_id: string
@@ -96,6 +97,7 @@ export function parseQueryToItemId(query: string): string {
   if (partial) return partial.id
 
   const tier = q.match(/t([4-8])/i)?.[1] || '4'
+
   if (q.includes('madeira')) return `T${tier}_WOOD`
   if (q.includes('minério') || q.includes('minerio') || q.includes('ore')) return `T${tier}_ORE`
   if (q.includes('fibra')) return `T${tier}_FIBER`
@@ -118,29 +120,47 @@ export async function fetchPrices(params: {
 }): Promise<PriceRow[]> {
   const host = servers[params.server]
   const itemIds = params.itemIds.join(',')
-  const locations = encodeURIComponent((params.locations?.length ? params.locations : cities).join(','))
+  const locationList = params.locations?.length ? params.locations : cities
+  const locations = encodeURIComponent(locationList.join(','))
   const qualities = params.qualities?.length ? `&qualities=${params.qualities.join(',')}` : ''
   const url = `${host}/api/v2/stats/prices/${itemIds}.json?locations=${locations}${qualities}`
+
   const response = await fetch(url)
-  if (!response.ok) throw new Error(`Falha na API Albion: ${response.status}`)
+
+  if (!response.ok) {
+    throw new Error(`Falha na API Albion: ${response.status}`)
+  }
+
   return response.json()
 }
 
 export function bestRouteFromPrices(rows: PriceRow[]) {
   const validBuy = rows.filter(r => r.sell_price_min > 0)
   const validSell = rows.filter(r => r.buy_price_max > 0)
+
   if (!validBuy.length || !validSell.length) return null
 
   const buy = [...validBuy].sort((a, b) => a.sell_price_min - b.sell_price_min)[0]
   const sell = [...validSell].sort((a, b) => b.buy_price_max - a.buy_price_max)[0]
   const profit = sell.buy_price_max - buy.sell_price_min
 
-  return { buy, sell, profit, margin: buy.sell_price_min ? (profit / buy.sell_price_min) * 100 : 0 }
+  return {
+    buy,
+    sell,
+    profit,
+    margin: buy.sell_price_min ? (profit / buy.sell_price_min) * 100 : 0
+  }
 }
 
 export function summarizePrices(rows: PriceRow[]) {
   const valid = rows.filter(r => r.sell_price_min > 0 || r.buy_price_max > 0)
   const cheapest = [...valid].filter(r => r.sell_price_min > 0).sort((a, b) => a.sell_price_min - b.sell_price_min)[0]
   const highestBuy = [...valid].filter(r => r.buy_price_max > 0).sort((a, b) => b.buy_price_max - a.buy_price_max)[0]
-  return { valid, cheapest, highestBuy, route: bestRouteFromPrices(rows) }
+
+  return {
+    valid,
+    cheapest,
+    highestBuy,
+    route: bestRouteFromPrices(rows)
+  }
 }

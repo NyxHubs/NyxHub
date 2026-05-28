@@ -1,5 +1,5 @@
 export const appConfig = {
-  version: '6.27.0',
+  version: '6.27.1',
   user: 'NyxLuisFelipe',
   password: 'LuanMiguel1410',
   githubOwner: 'SEU_USUARIO_GITHUB',
@@ -12,8 +12,8 @@ export const appConfig = {
   },
   news: [
     {
-      title: 'Atualização 6.27.0',
-      text: 'Dashboard AAA com API real do Albion aplicada.',
+      title: 'Atualização 6.27.1',
+      text: 'Correção de build e API Albion aplicada.',
       date: '26/05/2026'
     },
     {

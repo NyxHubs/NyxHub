@@ -1,6 +1,6 @@
 {
   "name": "nyxhub",
-  "version": "6.27.0",
+  "version": "6.27.1",
   "private": true,
   "productName": "NyxHub",
   "main": "electron/main.js",

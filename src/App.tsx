@@ -380,7 +380,7 @@ function RefiningModule() {
   const [loading, setLoading] = useState(false)
 
   async function calculate() {
-    setLoading(True as any)
+    setLoading(true)
   }
 
   async function run() {
